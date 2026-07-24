@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="2_machine"]
+[ext_resource type="Script" path="res://scripts/state_machine/player_locomotion_state.gd" id="3_locomotion"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape"]
+radius = 0.38
+height = 1.85
+
+[sub_resource type="SphereShape3D" id="SpringArmShape"]
+radius = 0.3
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_player")
+collision_layer = 1
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape")
+position = Vector3(0, 0.95, 0)
+
+[node name="CameraRig" type="Node3D" parent="."]
+position = Vector3(0, 1.45, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
+shape = SubResource("SpringArmShape")
+spring_length = 5.0
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
+current = true
+fov = 68.0
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_machine")
+initial_state = NodePath("Locomotion")
+
+[node name="Locomotion" type="Node" parent="StateMachine"]
+script = ExtResource("3_locomotion")

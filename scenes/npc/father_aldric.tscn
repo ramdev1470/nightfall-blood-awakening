@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/npc/father_aldric.gd" id="1_aldric"]
+
+[sub_resource type="CylinderShape3D" id="InteractShape"]
+radius = 2.6
+height = 2.0
+
+[node name="FatherAldric" type="CharacterBody3D" groups=["npc"]]
+script = ExtResource("1_aldric")
+collision_layer = 2
+collision_mask = 1
+
+[node name="InteractionArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape3D" parent="InteractionArea"]
+shape = SubResource("InteractShape")
+position = Vector3(0, 1, 0)
